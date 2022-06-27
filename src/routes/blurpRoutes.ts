@@ -1,18 +1,22 @@
 import { Router } from 'express';
+import { createBlurp, deleteBlurp, getAllBlurps, getBlurp, updateBlurp } from '../controllers/blurpController';
 
 const router = Router();
 
-//GET localhost:3000/api/blurps
-router.get('/', getAllMessages);
+//GET localhost:3006/api/blurps
+router.get('/', getAllBlurps);
 
-//POST localhots:3000/api/blurps
-router.post('/', createMessage);
+//POST localhots:3006/api/blurps
+router.post('/', createBlurp);
 
-router.get('/:messageId', getMessage);
+//GET localhost:3006/api/blurps/:blurpId
+router.get('/:blurpId', getBlurp);
 
-router.put('/:messageId', updateMessage);
+//PUT localhost:3006/api/blurps/:blurpId
+router.put('/:blurpId', updateBlurp);
 
-router.delete('/:messageId', deleteMessage);
+//DELETE localhost:3006/api/blurps/:blurpId
+router.delete('/:blurpId', deleteBlurp);
 
 export default router;
 
