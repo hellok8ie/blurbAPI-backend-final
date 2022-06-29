@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBlurp = exports.updateBlurp = exports.getBlurp = exports.createBlurp = exports.getAllBlurps = void 0;
+exports.deleteBlurp = exports.updateBlurp = exports.getAllUserBlurps = exports.getBlurp = exports.createBlurp = exports.getAllBlurps = void 0;
 const blurp_1 = require("../models/blurp");
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
@@ -37,6 +37,15 @@ const getBlurp = async (req, res, next) => {
     ;
 };
 exports.getBlurp = getBlurp;
+const getAllUserBlurps = async (req, res, next) => {
+    let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(403).send();
+    }
+    let blurpsFound = await blurp_1.Blurp.findAll({ where: { userId: user.userId } });
+    res.status(200).json(blurpsFound);
+};
+exports.getAllUserBlurps = getAllUserBlurps;
 const updateBlurp = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {

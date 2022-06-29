@@ -36,6 +36,17 @@ export const getBlurp: RequestHandler = async (req,res,next) => {
     };
 };
 
+export const getAllUserBlurps: RequestHandler = async (req,res,next) => {
+    let user:User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let blurpsFound = await Blurp.findAll({ where: { userId: user.userId}});
+    res.status(200).json(blurpsFound);
+};
+
 export const updateBlurp: RequestHandler = async (req,res,next) => {
 
     let user:User | null = await verifyUser(req);

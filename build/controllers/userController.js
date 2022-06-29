@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUser = exports.loginUser = exports.createUser = void 0;
+const blurp_1 = require("../models/blurp");
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const createUser = async (req, res, next) => {
@@ -39,12 +40,13 @@ const loginUser = async (req, res, next) => {
 };
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req);
-    if (!user) {
-        return res.status(403).send();
-    }
+    // let user: User | null = await verifyUser(req);
+    // if (!user) {
+    //     return res.status(403).send();
+    // }
     let userId = req.params.userId;
-    let userFound = await user_1.User.findByPk(userId);
+    // let userFound = await User.findByPk(userId)
+    let userFound = await user_1.User.findByPk(userId, { include: { model: blurp_1.Blurp, where: { userId } } });
     if (userFound) {
         res.status(200).json(userFound);
     }
