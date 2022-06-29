@@ -40,19 +40,17 @@ const loginUser = async (req, res, next) => {
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (user) {
-        let { username, firstName, lastName, city, state, avatarURL } = user;
-        res.status(200).json({
-            username,
-            firstName,
-            lastName,
-            city,
-            state,
-            avatarURL
-        });
+    if (!user) {
+        return res.status(403).send();
+    }
+    let userId = req.params.userId;
+    let userFound = await user_1.User.findByPk(userId);
+    if (userFound) {
+        res.status(200).json(userFound);
     }
     else {
-        res.status(401).send();
+        res.status(404).json({});
     }
+    ;
 };
 exports.getUser = getUser;

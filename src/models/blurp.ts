@@ -30,6 +30,10 @@ export function BlurpFactory(sequelize: Sequelize) {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
+            get: function() {
+                return this.getDataValue('createdAt')
+                ?.toLocaleString('en-US', { timeZone: 'UTC'});
+            }
         },
         updatedAt: {
             type: DataTypes.DATE,
