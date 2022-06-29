@@ -48,6 +48,7 @@ export function UserFactory(sequelize: Sequelize) {
         },
         avatarURL: {
             type: DataTypes.STRING,
+            allowNull: true
         },
         createdAt: {
             type: DataTypes.DATE,
