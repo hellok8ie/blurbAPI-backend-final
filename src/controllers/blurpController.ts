@@ -4,7 +4,10 @@ import { User } from "../models/user";
 import { verifyUser } from "../services/auth";
 
 export const getAllBlurps: RequestHandler = async (req,res,next) => {
-    let blurps = await Blurp.findAll({include: [{model: User, required: true}]});
+    let blurps = await Blurp.findAll({include: [{
+                                        model: User, 
+                                        required: true}],
+                                    order: [['blurpId', 'DESC']]});
     res.status(200).json(blurps);
 };
 

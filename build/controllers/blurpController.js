@@ -5,7 +5,11 @@ const blurp_1 = require("../models/blurp");
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const getAllBlurps = async (req, res, next) => {
-    let blurps = await blurp_1.Blurp.findAll({ include: [{ model: user_1.User, required: true }] });
+    let blurps = await blurp_1.Blurp.findAll({ include: [{
+                model: user_1.User,
+                required: true
+            }],
+        order: [['blurpId', 'DESC']] });
     res.status(200).json(blurps);
 };
 exports.getAllBlurps = getAllBlurps;

@@ -30,7 +30,7 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         
         if (passwordsMatch) {
             let token = await signUserToken(existingUser);
-            res.status(200).json({ token });
+            res.status(200).json({ token, existingUser });
         }
         else {
             res.status(401).json('Invalid password');
@@ -42,17 +42,17 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 };
 
 export const getUser: RequestHandler = async (req, res, next) => {
-    // let user: User | null = await verifyUser(req);
+    let user: User | null = await verifyUser(req);
 
-    // if (!user) {
-    //     return res.status(403).send();
-    // }
+    if (!user) {
+        return res.status(403).send();
+    }
 
     let userId = req.params.userId;
     
-    // let userFound = await User.findByPk(userId)
+    let userFound = await User.findByPk(userId)
 
-    let userFound = await User.findByPk(userId, {include: {model: Blurp, where: {userId}}});
+    // let userFound = await User.findByPk(userId, {include: {model: Blurp, where: {userId}}});
 
     if (userFound) {
         res.status(200).json(userFound)
