@@ -40,7 +40,7 @@ function UserFactory(sequelize) {
         },
         avatarURL: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
