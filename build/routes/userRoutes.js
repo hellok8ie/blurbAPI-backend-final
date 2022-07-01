@@ -5,5 +5,6 @@ const userController_1 = require("../controllers/userController");
 const router = (0, express_1.Router)();
 router.post('/', userController_1.createUser);
 router.post('/login', userController_1.loginUser);
+router.put('/profile/edit/:userId', userController_1.editUser);
 router.get('/profile/:userId', userController_1.getUser);
 exports.default = router;

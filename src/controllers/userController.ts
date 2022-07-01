@@ -59,4 +59,24 @@ export const getUser: RequestHandler = async (req, res, next) => {
     } else {
         res.status(404).json({});
     };
+}
+
+export const editUser: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let userId = req.params.userId;
+    let updateUser: User = req.body;
+    let userFound = await User.findByPk(userId)
+
+    if (userFound && userFound.userId == user.userId 
+        && userFound.userId == updateUser.userId) {
+            await User.update(updateUser, { where: { userId: userId}});
+            res.status(200).json();
+        } else {
+            res.status(400).json();
+        };
 };
